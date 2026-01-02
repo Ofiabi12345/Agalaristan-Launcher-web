@@ -2,119 +2,151 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Agalaristan Network | Market & Giriş</title>
+    <title>Agalaristan Network | Market & 3D Önizleme</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://bundle.run/skinview3d@3.0.0"></script>
     <style>
-        :root { --vurgu: #00d2ff; --altin: #ffcf40; --arkaplan: #0a0a0f; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; color: white; background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; }
+        :root { --vurgu: #00d2ff; --altin: #ffcf40; --arkaplan: rgba(10, 10, 15, 0.95); }
+        body { margin: 0; font-family: 'Poppins', sans-serif; color: white; background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; overflow-x: hidden; }
         
-        .katman { background: rgba(10,10,15,0.92); min-height: 100vh; backdrop-filter: blur(15px); padding: 20px 10%; }
-        
-        /* Navbar & Giriş Butonu */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #333; }
-        .logo { font-size: 28px; font-weight: bold; color: var(--vurgu); text-shadow: 0 0 10px var(--vurgu); }
-        .login-btn { background: var(--vurgu); color: black; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; }
+        .overlay { background: var(--arkaplan); min-height: 100vh; backdrop-filter: blur(10px); }
 
-        /* Giriş Pop-up (Modal) */
-        #loginModal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal-icerik { background: #1a1a22; margin: 15% auto; padding: 30px; border: 2px solid var(--vurgu); width: 350px; border-radius: 15px; text-align: center; }
-        .modal-icerik input { width: 90%; padding: 12px; margin: 10px 0; background: #2a2a35; border: 1px solid #444; color: white; border-radius: 5px; }
-        .modal-icerik button { width: 100%; padding: 12px; background: var(--vurgu); border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        /* Navbar */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; border-bottom: 2px solid var(--vurgu); background: rgba(0,0,0,0.5); }
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: 3px; color: var(--vurgu); text-shadow: 0 0 10px var(--vurgu); }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
-        /* Market Kartları */
-        h1 { text-align: center; margin-top: 40px; letter-spacing: 5px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
-        .kart { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; position: relative; }
-        .kart:hover { transform: translateY(-10px); border-color: var(--vurgu); }
-        
-        .fiyat { font-size: 35px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
-        .buy-btn { background: var(--vurgu); color: black; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; }
+        /* Giriş/Kayıt Modal */
+        #authModal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+        .modal-content { background: #15151b; margin: 5% auto; padding: 30px; border: 2px solid var(--vurgu); width: 350px; border-radius: 20px; text-align: center; }
+        .modal-content input { width: 90%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; }
+        .modal-content button { width: 100%; padding: 12px; background: var(--vurgu); border: none; font-weight: bold; cursor: pointer; border-radius: 8px; margin-top: 10px; }
 
-        /* Rainbow & Admin */
-        @keyframes gokkusagi { 0% {color: red;} 33% {color: cyan;} 66% {color: lime;} 100% {color: red;} }
-        .rvip-rank { animation: gokkusagi 2s infinite linear; font-weight: 900; }
-        #admin-status { display: none; background: #e74c3c; color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+        /* Pelerin Önizleme Bölümü */
+        .preview-container { margin: 40px auto; width: 80%; background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px; border: 1px dashed var(--vurgu); display: flex; flex-direction: column; align-items: center; }
+        #skin-viewer { width: 300px; height: 400px; }
+        .preview-controls { margin-top: 15px; }
 
-        /* Karşılaştırma Tablosu */
-        table { width: 100%; margin-top: 50px; border-collapse: collapse; background: rgba(0,0,0,0.4); }
-        th, td { padding: 15px; border: 1px solid #444; text-align: center; }
-        th { background: var(--vurgu); color: black; }
+        /* Market */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px 10%; }
+        .card { background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; transition: 0.3s; }
+        .card:hover { border-color: var(--vurgu); transform: translateY(-5px); }
+        .price { font-size: 28px; color: #2ecc71; font-weight: bold; margin: 15px 0; }
+        .buy-btn { background: var(--vurgu); color: black; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; cursor: pointer; }
+
+        #owner-bar { display: none; background: #e74c3c; color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; width: 100%; z-index: 1001; }
     </style>
 </head>
 <body>
 
-<div id="admin-status">SAHİP MODU AKTİF: HOŞ GELDİN OFİABİ123! TÜM ÜRÜNLER BELEŞ.</div>
+<div id="owner-bar">SAHİP YETKİSİ AKTİF: HOŞ GELDİN OFİABİ123!</div>
 
-<div id="loginModal">
-    <div class="modal-icerik">
-        <h2 style="color: var(--vurgu);">Agalar Girişi</h2>
-        <input type="text" id="username" placeholder="Kullanıcı Adı">
-        <input type="password" id="password" placeholder="Şifre">
-        <button onclick="girisYap()">Giriş Yap</button>
-        <button onclick="document.getElementById('loginModal').style.display='none'" style="background:#555; margin-top:5px;">Kapat</button>
+<div id="authModal">
+    <div class="modal-content">
+        <div id="login-box">
+            <h2>Giriş Yap</h2>
+            <input type="text" id="user" placeholder="Kullanıcı Adı">
+            <input type="password" id="pass" placeholder="Şifre">
+            <button onclick="handleLogin()">Giriş Yap</button>
+            <p onclick="toggleAuth()" style="cursor:pointer; font-size:12px; color:#888; margin-top:10px;">Hesabın yok mu? Kayıt Ol</p>
+        </div>
+        <div id="register-box" style="display:none;">
+            <h2>Kayıt Ol</h2>
+            <input type="text" id="reg-user" placeholder="Kullanıcı Adı Seç">
+            <input type="password" id="reg-pass" placeholder="Şifre Oluştur">
+            <button onclick="handleRegister()">Kayıt Ol</button>
+            <p onclick="toggleAuth()" style="cursor:pointer; font-size:12px; color:#888; margin-top:10px;">Giriş Yap</p>
+        </div>
+        <p onclick="document.getElementById('authModal').style.display='none'" style="cursor:pointer; font-size:12px; margin-top:10px;">Kapat</p>
     </div>
 </div>
 
-<div class="katman">
+<div class="overlay">
     <nav>
         <div class="logo">AGALARİSTAN</div>
-        <a href="javascript:void(0)" class="login-btn" id="loginLabel" onclick="document.getElementById('loginModal').style.display='block'">GİRİŞ YAP</a>
+        <div class="nav-links">
+            <a onclick="document.getElementById('authModal').style.display='block'" id="userDisplay">GİRİŞ / KAYIT</a>
+        </div>
     </nav>
 
-    <h1>SUNUCU MARKETİ</h1>
+    <div style="text-align:center; margin-top:30px;">
+        <h2>3D PELERİN ÖNİZLEME</h2>
+        <p style="font-size:12px; color:var(--vurgu);">İsmini yaz ve pelerinini üzerinde gör!</p>
+    </div>
 
-    <div class="grid">
-        <div class="kart">
-            <h3>[VIP+]</h3>
-            <div class="fiyat" data-price="50">50 TL</div>
-            <a href="#" class="buy-btn">SATIN AL</a>
-        </div>
-        <div class="kart">
-            <h3>[MVIP+]</h3>
-            <div class="fiyat" data-price="100">100 TL</div>
-            <a href="#" class="buy-btn">SATIN AL</a>
-        </div>
-        <div class="kart">
-            <h3 class="rvip-rank">[RVIP]</h3>
-            <div class="fiyat" data-price="250">250 TL</div>
-            <a href="#" class="buy-btn" style="background: var(--altin);">SATIN AL</a>
+    <div class="preview-container">
+        <div id="skin-viewer"></div>
+        <div class="preview-controls">
+            <input type="text" id="skin-name" placeholder="Minecraft İsmin" style="padding:8px; border-radius:5px; border:none;">
+            <button onclick="updateSkin()" style="padding:8px; background:var(--vurgu); border:none; border-radius:5px; font-weight:bold; cursor:pointer;">Sola Göster</button>
         </div>
     </div>
 
-    <h2 style="text-align: center; margin-top: 60px;">RÜTBE AYRICALIKLARI</h2>
-    <table>
-        <thead>
-            <tr><th>Özellik</th><th>VIP+</th><th>MVIP+</th><th class="rvip-rank">RVIP</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Uçma Yetkisi</td><td>❌</td><td>✅</td><td>✅</td></tr>
-            <tr><td>Sandık Sayfası</td><td>1</td><td>3</td><td>5</td></tr>
-            <tr><td>İsim Rengi</td><td>Yeşil</td><td>Mavi</td><td class="rvip-rank">Gökkuşağı</td></tr>
-        </tbody>
-    </table>
+    <div class="grid">
+        <div class="card">
+            <i class="fas fa-dragon" style="font-size:40px; color:#e74c3c;"></i>
+            <h3>Ejderha Pelerini</h3>
+            <p>Sırtında efsanevi durur!</p>
+            <div class="price" id="p1">75 AG</div>
+            <div class="buy-btn" onclick="applyCape('https://piskel-imgstore-b.appspot.com/img/934e892c-567e-11eb-9b43-29471f49615e.png')">ÜSTÜNDE DENE</div>
+        </div>
+        <div class="card">
+            <i class="fas fa-bolt" style="font-size:40px; color:#f1c40f;"></i>
+            <h3>Şimşek Pelerini</h3>
+            <p>Hız tutkunları için.</p>
+            <div class="price" id="p2">75 AG</div>
+            <div class="buy-btn" onclick="applyCape('https://piskel-imgstore-b.appspot.com/img/76977464-567e-11eb-9114-29471f49615e.png')">ÜSTÜNDE DENE</div>
+        </div>
+    </div>
 </div>
 
 <script>
-    function girisYap() {
-        const u = document.getElementById('username').value;
-        const p = document.getElementById('password').value;
+    // 3D Skin Viewer Kurulumu
+    let skinViewer = new skinview3d.SkinViewer({
+        canvas: document.getElementById("skin-viewer"),
+        width: 300,
+        height: 400,
+        skin: "https://mineskin.org/render/head/Ofiabi123" // Varsayılan skin
+    });
 
-        // Senin özel bilgilerin
-        if (u === "Ofiabi123" && p === "1st2nd3rdAzaZ") {
-            alert("Selam Sahip! Mağaza senin için artık tamamen bedava.");
-            
-            // UI Güncelleme
-            document.getElementById('admin-status').style.display = "block";
-            document.getElementById('loginLabel').innerText = "HOŞ GELDİN: " + u;
-            document.getElementById('loginModal').style.display = "none";
+    skinViewer.zoom = 0.8;
+    skinViewer.autoRotate = true;
+    skinViewer.animation = new skinview3d.WalkingAnimation();
 
-            // Fiyatları 0 Yapma (Her şey Beleş!)
-            const fiyatlar = document.querySelectorAll('.fiyat');
-            fiyatlar.forEach(f => {
-                f.innerText = "BELEŞ (0 TL)";
-                f.style.color = "var(--altin)";
-            });
+    function updateSkin() {
+        const name = document.getElementById('skin-name').value;
+        if(name) {
+            skinViewer.loadSkin(`https://mineskin.org/render/head/${name}`);
+        }
+    }
+
+    function applyCape(capeUrl) {
+        skinViewer.loadCape(capeUrl);
+        alert("Pelerin 3D model üzerine uygulandı! Çevirip bakabilirsin.");
+    }
+
+    // Giriş Kayıt Fonksiyonları
+    function toggleAuth() {
+        const l = document.getElementById('login-box');
+        const r = document.getElementById('register-box');
+        l.style.display = l.style.display === 'none' ? 'block' : 'none';
+        r.style.display = r.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function handleLogin() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+
+        if(u === "Ofiabi123" && p === "1st2nd3rdAzaZ") {
+            document.getElementById('owner-bar').style.display = "block";
+            document.getElementById('userDisplay').innerText = "SAHİP: " + u;
+            document.getElementById('authModal').style.display = "none";
+            document.getElementById('p1').innerText = "0 AG";
+            document.getElementById('p2').innerText = "0 AG";
+            // Otomatik olarak kendi skinini yükle
+            skinViewer.loadSkin(`https://mineskin.org/render/head/${u}`);
         } else {
-            alert("Hatalı giriş! Şifreyi veya kullanıcı adını kontrol et agacım.");
+            alert("Hatalı giriş!");
         }
     }
 </script>
