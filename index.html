@@ -2,63 +2,122 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Agalaristan Network | Resmi Market</title>
+    <title>Agalaristan Network | Market & Giriş</title>
     <style>
-        :root { --accent: #00d2ff; --gold: #ffcf40; }
+        :root { --vurgu: #00d2ff; --altin: #ffcf40; --arkaplan: #0a0a0f; }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; color: white; background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; }
-        .overlay { background: rgba(10,10,15,0.85); min-height: 100vh; backdrop-filter: blur(10px); padding: 50px 10%; }
-        h1 { text-align: center; color: var(--accent); font-size: 50px; text-shadow: 0 0 15px var(--accent); letter-spacing: 5px; }
-        h2 { text-align: center; border-bottom: 2px solid var(--accent); display: inline-block; width: 100%; padding-bottom: 10px; margin-top: 60px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; }
-        .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
-        .price { font-size: 35px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
-        .btn { background: var(--accent); color: black; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; }
         
-        @keyframes rb { 0% {color: red;} 33% {color: cyan;} 66% {color: lime;} 100% {color: red;} }
-        .rvip-rank { animation: rb 2s infinite linear; font-weight: 900; }
+        .katman { background: rgba(10,10,15,0.92); min-height: 100vh; backdrop-filter: blur(15px); padding: 20px 10%; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 30px; background: rgba(0,0,0,0.5); }
-        th, td { padding: 15px; border: 1px solid #333; text-align: center; }
-        th { background: var(--accent); color: black; }
-        #admin-info { display: none; background: red; color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+        /* Navbar & Giriş Butonu */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #333; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--vurgu); text-shadow: 0 0 10px var(--vurgu); }
+        .login-btn { background: var(--vurgu); color: black; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; }
+
+        /* Giriş Pop-up (Modal) */
+        #loginModal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-icerik { background: #1a1a22; margin: 15% auto; padding: 30px; border: 2px solid var(--vurgu); width: 350px; border-radius: 15px; text-align: center; }
+        .modal-icerik input { width: 90%; padding: 12px; margin: 10px 0; background: #2a2a35; border: 1px solid #444; color: white; border-radius: 5px; }
+        .modal-icerik button { width: 100%; padding: 12px; background: var(--vurgu); border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        /* Market Kartları */
+        h1 { text-align: center; margin-top: 40px; letter-spacing: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .kart { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; position: relative; }
+        .kart:hover { transform: translateY(-10px); border-color: var(--vurgu); }
+        
+        .fiyat { font-size: 35px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
+        .buy-btn { background: var(--vurgu); color: black; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; }
+
+        /* Rainbow & Admin */
+        @keyframes gokkusagi { 0% {color: red;} 33% {color: cyan;} 66% {color: lime;} 100% {color: red;} }
+        .rvip-rank { animation: gokkusagi 2s infinite linear; font-weight: 900; }
+        #admin-status { display: none; background: #e74c3c; color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+
+        /* Karşılaştırma Tablosu */
+        table { width: 100%; margin-top: 50px; border-collapse: collapse; background: rgba(0,0,0,0.4); }
+        th, td { padding: 15px; border: 1px solid #444; text-align: center; }
+        th { background: var(--vurgu); color: black; }
     </style>
 </head>
 <body>
-    <div id="admin-info">ADMİN PANELİ AKTİF: HOŞ GELDİN SAHİP!</div>
-    <div class="overlay">
-        <h1>AGALARİSTAN MARKET</h1>
-        
-        <h2>VIP PAKETLERİ</h2>
-        <div class="grid">
-            <div class="card"><h3>[VIP+]</h3><div class="price">50 TL</div><a href="#" class="btn">SATIN AL</a></div>
-            <div class="card"><h3>[MVIP+]</h3><div class="price">100 TL</div><a href="#" class="btn">SATIN AL</a></div>
-            <div class="card"><h3 class="rvip-rank">[RVIP]</h3><div class="price">250 TL</div><a href="#" class="btn" style="background:var(--gold)">SATIN AL</a></div>
-        </div>
 
-        <h2>RÜTBE AYRICALIKLARI</h2>
-        <table>
-            <thead><tr><th>Özellik</th><th>VIP+</th><th>MVIP+</th><th class="rvip-rank">RVIP</th></tr></thead>
-            <tbody>
-                <tr><td>Uçma (/fly)</td><td>❌</td><td>✅</td><td>✅ (SINIRSIZ)</td></tr>
-                <tr><td>Kit Süresi</td><td>6 Saat</td><td>3 Saat</td><td>1 Saat</td></tr>
-                <tr><td>Sanal Sandık</td><td>1 Sayfa</td><td>3 Sayfa</td><td>5 Sayfa</td></tr>
-                <tr><td>Giriş Mesajı</td><td>Normal</td><td>Renkli</td><td class="rvip-rank">GÖKKUŞAĞI</td></tr>
-            </tbody>
-        </table>
+<div id="admin-status">SAHİP MODU AKTİF: HOŞ GELDİN OFİABİ123! TÜM ÜRÜNLER BELEŞ.</div>
+
+<div id="loginModal">
+    <div class="modal-icerik">
+        <h2 style="color: var(--vurgu);">Agalar Girişi</h2>
+        <input type="text" id="username" placeholder="Kullanıcı Adı">
+        <input type="password" id="password" placeholder="Şifre">
+        <button onclick="girisYap()">Giriş Yap</button>
+        <button onclick="document.getElementById('loginModal').style.display='none'" style="background:#555; margin-top:5px;">Kapat</button>
+    </div>
+</div>
+
+<div class="katman">
+    <nav>
+        <div class="logo">AGALARİSTAN</div>
+        <a href="javascript:void(0)" class="login-btn" id="loginLabel" onclick="document.getElementById('loginModal').style.display='block'">GİRİŞ YAP</a>
+    </nav>
+
+    <h1>SUNUCU MARKETİ</h1>
+
+    <div class="grid">
+        <div class="kart">
+            <h3>[VIP+]</h3>
+            <div class="fiyat" data-price="50">50 TL</div>
+            <a href="#" class="buy-btn">SATIN AL</a>
+        </div>
+        <div class="kart">
+            <h3>[MVIP+]</h3>
+            <div class="fiyat" data-price="100">100 TL</div>
+            <a href="#" class="buy-btn">SATIN AL</a>
+        </div>
+        <div class="kart">
+            <h3 class="rvip-rank">[RVIP]</h3>
+            <div class="fiyat" data-price="250">250 TL</div>
+            <a href="#" class="buy-btn" style="background: var(--altin);">SATIN AL</a>
+        </div>
     </div>
 
-    <script>
-        let log = "";
-        document.addEventListener('keydown', (e) => {
-            log += e.key;
-            if (log.includes("1st2nd3rdAzaZ")) {
-                document.getElementById('admin-info').style.display = "block";
-                document.querySelectorAll('.price').forEach(p => { p.innerText = "0 TL"; p.style.color = "gold"; });
-                alert("Yönetici moduna girildi!");
-                log = "";
-            }
-        });
-    </script>
+    <h2 style="text-align: center; margin-top: 60px;">RÜTBE AYRICALIKLARI</h2>
+    <table>
+        <thead>
+            <tr><th>Özellik</th><th>VIP+</th><th>MVIP+</th><th class="rvip-rank">RVIP</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Uçma Yetkisi</td><td>❌</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Sandık Sayfası</td><td>1</td><td>3</td><td>5</td></tr>
+            <tr><td>İsim Rengi</td><td>Yeşil</td><td>Mavi</td><td class="rvip-rank">Gökkuşağı</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function girisYap() {
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+
+        // Senin özel bilgilerin
+        if (u === "Ofiabi123" && p === "1st2nd3rdAzaZ") {
+            alert("Selam Sahip! Mağaza senin için artık tamamen bedava.");
+            
+            // UI Güncelleme
+            document.getElementById('admin-status').style.display = "block";
+            document.getElementById('loginLabel').innerText = "HOŞ GELDİN: " + u;
+            document.getElementById('loginModal').style.display = "none";
+
+            // Fiyatları 0 Yapma (Her şey Beleş!)
+            const fiyatlar = document.querySelectorAll('.fiyat');
+            fiyatlar.forEach(f => {
+                f.innerText = "BELEŞ (0 TL)";
+                f.style.color = "var(--altin)";
+            });
+        } else {
+            alert("Hatalı giriş! Şifreyi veya kullanıcı adını kontrol et agacım.");
+        }
+    }
+</script>
+
 </body>
 </html>
