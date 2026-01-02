@@ -2,156 +2,63 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agalaristan Network | Profesyonel Market</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Agalaristan Network | Resmi Market</title>
     <style>
-        :root {
-            --bg-overlay: rgba(10, 10, 15, 0.85);
-            --accent: #00d2ff;
-            --rvip-gradient: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            color: white;
-            /* ARKA PLAN DÜZELTME: Sabit, full ekran ve bulanıklaştırılmış Minecraft görseli */
-            background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-            background-size: cover;
-            overflow-x: hidden;
-        }
-
-        /* Tüm içeriğin üzerine binen koyu katman (Yazıların okunması için) */
-        .overlay {
-            background: var(--bg-overlay);
-            min-height: 100vh;
-            backdrop-filter: blur(8px); /* Modern cam efekti */
-        }
-
-        /* Navbar */
-        nav {
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.5);
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .logo { font-size: 28px; font-weight: 900; letter-spacing: 3px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-
-        /* Rainbow (RVIP) Efekti */
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-        .rvip-text {
-            background: var(--rvip-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            animation: rainbow 3s linear infinite;
-            font-size: 24px;
-        }
-
-        /* Kartlar */
-        .container { padding: 50px 10%; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        :root { --accent: #00d2ff; --gold: #ffcf40; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; color: white; background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; }
+        .overlay { background: rgba(10,10,15,0.85); min-height: 100vh; backdrop-filter: blur(10px); padding: 50px 10%; }
+        h1 { text-align: center; color: var(--accent); font-size: 50px; text-shadow: 0 0 15px var(--accent); letter-spacing: 5px; }
+        h2 { text-align: center; border-bottom: 2px solid var(--accent); display: inline-block; width: 100%; padding-bottom: 10px; margin-top: 60px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; }
+        .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .price { font-size: 35px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
+        .btn { background: var(--accent); color: black; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; }
         
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.4s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .card:hover {
-            transform: translateY(-15px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--accent);
-            box-shadow: 0 15px 40px rgba(0, 210, 255, 0.3);
-        }
-
-        .price { font-size: 32px; color: #2ecc71; font-weight: bold; margin: 20px 0; }
+        @keyframes rb { 0% {color: red;} 33% {color: cyan;} 66% {color: lime;} 100% {color: red;} }
+        .rvip-rank { animation: rb 2s infinite linear; font-weight: 900; }
         
-        .buy-btn {
-            background: var(--accent);
-            color: black;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            transition: 0.3s;
-        }
-
-        .buy-btn:hover { background: white; transform: scale(1.1); }
-
-        /* Başlıklar */
-        h2 { font-size: 40px; text-align: center; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 5px; }
-
+        table { width: 100%; border-collapse: collapse; margin-top: 30px; background: rgba(0,0,0,0.5); }
+        th, td { padding: 15px; border: 1px solid #333; text-align: center; }
+        th { background: var(--accent); color: black; }
+        #admin-info { display: none; background: red; color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
     </style>
 </head>
 <body>
-
-<div class="overlay">
-    <nav>
-        <div class="logo">AGALARİSTAN</div>
-        <div class="links">
-            <a href="#vips" style="color:white; text-decoration:none; margin: 0 15px;">VIP</a>
-            <a href="#capes" style="color:white; text-decoration:none; margin: 0 15px;">PELERİN</a>
-            <a href="#" style="color: #ffcf40; text-decoration:none; font-weight:bold;">ADMİN PANEL</a>
-        </div>
-    </nav>
-
-    <div class="container" id="vips">
-        <h2>AYRICALIKLI RÜTBELER</h2>
+    <div id="admin-info">ADMİN PANELİ AKTİF: HOŞ GELDİN SAHİP!</div>
+    <div class="overlay">
+        <h1>AGALARİSTAN MARKET</h1>
+        
+        <h2>VIP PAKETLERİ</h2>
         <div class="grid">
-            <div class="card">
-                <h3 style="color:#55FF55; font-size:24px;">[VIP+]</h3>
-                <p>Ekstra kitler ve hız ayrıcalığı.</p>
-                <div class="price">50 TL</div>
-                <a href="#" class="buy-btn">SATIN AL</a>
-            </div>
-            <div class="card">
-                <h3 style="color:#FFAA00; font-size:24px;">[MVIP+]</h3>
-                <p>Tüm dünyalarda uçuş yetkisi.</p>
-                <div class="price">100 TL</div>
-                <a href="#" class="buy-btn">SATIN AL</a>
-            </div>
-            <div class="card" style="border: 2px solid gold;">
-                <h3 class="rvip-text">[RVIP]</h3>
-                <p>Gökkuşağı Tagı ve Özel Efektler.</p>
-                <div class="price">250 TL</div>
-                <a href="#" class="buy-btn" style="background:gold;">AGALARIN SEÇİMİ</a>
-            </div>
+            <div class="card"><h3>[VIP+]</h3><div class="price">50 TL</div><a href="#" class="btn">SATIN AL</a></div>
+            <div class="card"><h3>[MVIP+]</h3><div class="price">100 TL</div><a href="#" class="btn">SATIN AL</a></div>
+            <div class="card"><h3 class="rvip-rank">[RVIP]</h3><div class="price">250 TL</div><a href="#" class="btn" style="background:var(--gold)">SATIN AL</a></div>
         </div>
+
+        <h2>RÜTBE AYRICALIKLARI</h2>
+        <table>
+            <thead><tr><th>Özellik</th><th>VIP+</th><th>MVIP+</th><th class="rvip-rank">RVIP</th></tr></thead>
+            <tbody>
+                <tr><td>Uçma (/fly)</td><td>❌</td><td>✅</td><td>✅ (SINIRSIZ)</td></tr>
+                <tr><td>Kit Süresi</td><td>6 Saat</td><td>3 Saat</td><td>1 Saat</td></tr>
+                <tr><td>Sanal Sandık</td><td>1 Sayfa</td><td>3 Sayfa</td><td>5 Sayfa</td></tr>
+                <tr><td>Giriş Mesajı</td><td>Normal</td><td>Renkli</td><td class="rvip-rank">GÖKKUŞAĞI</td></tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="container" id="capes">
-        <h2>KOZMETİK MARKET</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fas fa-dragon" style="font-size: 50px; color: #e74c3c;"></i>
-                <h3>Ejderha Kanadı</h3>
-                <p>Sırtında devasa animasyonlu kanatlar!</p>
-                <div class="price">75 AG</div>
-                <a href="#" class="buy-btn">KUŞAN</a>
-            </div>
-            <div class="card">
-                <i class="fas fa-magic" style="font-size: 50px; color: #9b59b6;"></i>
-                <h3>Büyücü Efekti</h3>
-                <p>Yürürken arkanda yıldızlar çıkar.</p>
-                <div class="price">40 AG</div>
-                <a href="#" class="buy-btn">KUŞAN</a>
-            </div>
-        </div>
-    </div>
-</div>
-
+    <script>
+        let log = "";
+        document.addEventListener('keydown', (e) => {
+            log += e.key;
+            if (log.includes("1st2nd3rdAzaZ")) {
+                document.getElementById('admin-info').style.display = "block";
+                document.querySelectorAll('.price').forEach(p => { p.innerText = "0 TL"; p.style.color = "gold"; });
+                alert("Yönetici moduna girildi!");
+                log = "";
+            }
+        });
+    </script>
 </body>
 </html>
