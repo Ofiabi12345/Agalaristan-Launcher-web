@@ -1,76 +1,18 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Agalaristan - Başlatıcı</title>
-    <style>
-        body { background-color: #121212; color: white; font-family: sans-serif; margin: 0; }
-        
-        /* Üst Menü Düzenlemesi */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: #1a1a1a;
-            border-bottom: 2px solid #27ae60;
-        }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-            font-weight: bold;
-        }
-        .auth-buttons a {
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .login { color: white; margin-right: 10px; }
-        .register { background-color: #27ae60; color: white; }
-
-        /* İndirme Alanı */
-        .download-container {
-            text-align: center;
-            padding: 100px 20px;
-        }
-        .btn-download {
-            background-color: #2ecc71;
-            color: white;
-            padding: 20px 40px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.5em;
-            font-weight: bold;
-            display: inline-block;
-            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="nav-links">
-            <a href="#kozmetikler">💄 Kozmetikler</a>
-            <a href="/">🏠 Ana Sayfa</a>
-        </div>
-        
-        <div class="auth-buttons">
-            <a href="#login" class="login">Giriş Yap</a>
-            <a href="#register" class="register">Kayıt Ol</a>
-        </div>
-    </nav>
-
-    <div class="download-container">
-        <h1>Agalaristan v1.21.1</h1>
-        <p>Özel dosya yapısı ve OptiFine ile kesintisiz macera.</p>
-        <br>
-        <a href="Agalaristan_Setup.exe" download="Agalaristan_Setup.exe" class="btn-download">
-            📥 HEMEN İNDİR
-        </a>
-        <p style="color: #666; margin-top: 10px;">Setup dosyasını direkt indirmeye başlar.</p>
+<nav style="display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: #1a1a1a; border-bottom: 2px solid #27ae60;">
+    <div style="display: flex; gap: 20px;">
+        <a href="#kozmetikler" style="color: #27ae60; text-decoration: none; font-weight: bold;">💄 KOZMETİKLER</a>
+        <a href="/" style="color: white; text-decoration: none;">ANA SAYFA</a>
     </div>
 
-</body>
-</html>
+    <div style="display: flex; gap: 15px;">
+        <a href="#login" style="color: white; text-decoration: none; padding: 8px 15px;">Giriş Yap</a>
+        <a href="#register" style="background: #27ae60; color: white; text-decoration: none; padding: 8px 20px; border-radius: 5px; font-weight: bold;">Kayıt Ol</a>
+    </div>
+</nav>
+
+<div style="text-align: center; padding: 80px 20px;">
+    <h1 style="color: white;">Agalaristan Launcher</h1>
+    <a href="Agalaristan_Setup.exe" download style="display: inline-block; background: #2ecc71; color: white; padding: 20px 50px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.4em; box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3);">
+        📥 HEMEN İNDİR
+    </a>
+</div>
