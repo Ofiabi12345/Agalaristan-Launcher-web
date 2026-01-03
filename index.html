@@ -1,15 +1,76 @@
-<section style="text-align: center; padding: 50px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <h1 style="color: #2c3e50;">Agalaristan Dünyasına Hoş Geldin!</h1>
-    <p style="color: #7f8c8d; font-size: 1.1em;">1.21.1 OptiFine destekli, tamamen bağımsız özel sürüm.</p>
-    
-    <div style="margin-top: 30px;">
-        <a href="SENIN_DOSYA_LINKIN_BURAYA" 
-           style="background-color: #27ae60; color: white; padding: 18px 35px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.3em; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3); transition: 0.3s;">
-           🚀 Agalaristan Setup İndir
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Agalaristan - Başlatıcı</title>
+    <style>
+        body { background-color: #121212; color: white; font-family: sans-serif; margin: 0; }
+        
+        /* Üst Menü Düzenlemesi */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #1a1a1a;
+            border-bottom: 2px solid #27ae60;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .auth-buttons a {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login { color: white; margin-right: 10px; }
+        .register { background-color: #27ae60; color: white; }
+
+        /* İndirme Alanı */
+        .download-container {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .btn-download {
+            background-color: #2ecc71;
+            color: white;
+            padding: 20px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#kozmetikler">💄 Kozmetikler</a>
+            <a href="/">🏠 Ana Sayfa</a>
+        </div>
+        
+        <div class="auth-buttons">
+            <a href="#login" class="login">Giriş Yap</a>
+            <a href="#register" class="register">Kayıt Ol</a>
+        </div>
+    </nav>
+
+    <div class="download-container">
+        <h1>Agalaristan v1.21.1</h1>
+        <p>Özel dosya yapısı ve OptiFine ile kesintisiz macera.</p>
+        <br>
+        <a href="Agalaristan_Setup.exe" download="Agalaristan_Setup.exe" class="btn-download">
+            📥 HEMEN İNDİR
         </a>
+        <p style="color: #666; margin-top: 10px;">Setup dosyasını direkt indirmeye başlar.</p>
     </div>
-    
-    <p style="margin-top: 20px; color: #95a5a6; font-size: 0.9em;">
-        *Oyun dosyaları <strong>%appdata%/.agalaristan</strong> klasörüne kurulur, orijinal Minecraft'ınızı bozmaz.
-    </p>
-</section>
+
+</body>
+</html>
